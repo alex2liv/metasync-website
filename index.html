@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaSync Digital - Automação e Performance Digital</title>
+    <style>
+        :root {
+            --primary-blue: #0052cc;
+            --primary-orange: #ff6b00;
+            --dark-gray: #333333;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .logo span.meta {
+            color: var(--primary-blue);
+        }
+        
+        .logo span.sync {
+            color: var(--primary-orange);
+        }
+        
+        .logo span.digital {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--dark-gray);
+            margin-left: 5px;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background: #e05f00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background: linear-gradient(to right, rgba(0, 82, 204, 0.95), rgba(0, 82, 204, 0.7)), url('/api/placeholder/1600/900') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            color: var(--white);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .hero h1 {
+            font-size: 54px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        /* Hero animated elements */
+        .hero-graphic {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+        }
+        
+        .circle-outer {
+            width: 300px;
+            height: 300px;
+            border: 4px solid rgba(255, 255, 255, 0.4);
+            animation: rotate 20s linear infinite;
+        }
+        
+        .circle-inner {
+            width: 150px;
+            height: 150px;
+            background: var(--primary-orange);
+            animation: pulse 3s ease infinite alternate;
+        }
+        
+        .connection-line {
+            position: absolute;
+            width: 150px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.7);
+            transform-origin: left center;
+        }
+        
+        .line1 { transform: rotate(0deg); }
+        .line2 { transform: rotate(45deg); }
+        .line3 { transform: rotate(90deg); }
+        .line4 { transform: rotate(135deg); }
+        .line5 { transform: rotate(180deg); }
+        .line6 { transform: rotate(225deg); }
+        .line7 { transform: rotate(270deg); }
+        .line8 { transform: rotate(315deg); }
+        
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background: var(--white);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 42px;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-orange);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-header p {
+            color: #666;
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .service-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-gray);
+            border-radius: 50%;
+            color: var(--primary-blue);
+            font-size: 36px;
+        }
+        
+        .service-card:nth-child(even) .service-icon {
+            color: var(--primary-orange);
+        }
+        
+        .service-content {
+            padding: 0 25px 30px;
+            text-align: center;
+        }
+        
+        .service-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--dark-gray);
+        }
+        
+        .service-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-size: 42px;
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+        }
+        
+        .about-text h3 {
+            font-size: 24px;
+            color: var(--primary-orange);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .about-text p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .value-item {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .value-item .icon {
+            margin-right: 15px;
+            color: var(--primary-blue);
+            font-size: 24px;
+        }
+        
+        .value-item h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--dark-gray);
+        }
+        
+        .value-item p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--white);
+        }
+        
+        .testimonials-slider {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .testimonial-card {
+            background: var(--light-gray);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 20px;
+            position: relative;
+        }
+        
+        .testimonial-card:after {
+            content: """;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 120px;
+            color: rgba(0, 82, 204, 0.1);
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .author-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--dark-gray);
+        }
+        
+        .author-info p {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(to right, var(--primary-blue), #003d99);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .cta-section h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 70px 0 20px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo span.meta {
+            color: #fff;
+        }
+        
+        .footer-logo span.sync {
+            color: var(--primary-orange);
+        }
+        
+        .footer-about p {
+            margin-bottom: 25px;
+            line-height: 1.7;
+            opacity: 0.8;
+        }
+        
+        .social-links {
+            display: flex;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h3 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary-orange);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--primary-orange);
+            padding-left: 5px;
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .footer-contact p i {
+            margin-right: 15px;
+            color: var(--primary-orange);
+        }
+        
+        .footer-newsletter form {
+            position: relative;
+        }
+        
+        .footer-newsletter input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .footer-newsletter button {
+            background: var(--primary-orange);
+            border: none;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-newsletter button:hover {
+            background: #e05f00;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 50px;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        
+        /* Animations */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.8; }
+            to { transform: scale(1.1); opacity: 1; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 42px;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+            
+            .hero-graphic {
+                opacity: 0.3;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .section-header h2 {
+                font-size: 36px;
+            }
+            
+            .about-text h2 {
+                font-size: 36px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-section h2 {
+                font-size: 36px;
+            }
+        }
+        
+        /* Mobile Menu */
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+            
+            nav ul.active {
+                display: block;
+            }
+            
+            nav ul li {
+                margin: 0;
+                padding: 12px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo">
+            <svg class="logo-icon" width="40" height="40" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" stroke="#0052cc" stroke-width="5" fill="none" />
+                <circle cx="50" cy="50" r="15" fill="#ff6b00" />
+                <line x1="50" y1="20" x2="50" y2="35" stroke="#0052cc" stroke-width="5" />
+                <line x1="50" y1="65" x2="50" y2="80" stroke="#0052cc" stroke-width="5" />
+                <line x1="20" y1="50" x2="35" y2="50" stroke="#0052cc" stroke-width="5" />
+                <line x1="65" y1="50" x2="80" y2="50" stroke="#0052cc" stroke-width="5" />
+                <line x1="30" y1="30" x2="40" y2="40" stroke="#0052cc" stroke-width="5" />
+                <line x1="60" y1="60" x2="70" y2="70" stroke="#0052cc" stroke-width="5" />
+                <line x1="30" y1="70" x2="40" y2="60" stroke="#0052cc" stroke-width="5" />
+                <line x1="60" y1="40" x2="70" y2="30" stroke="#0052cc" stroke-width="5" />
+            </svg>
+            <span class="meta">Meta</span><span class="sync">Sync</span>
+            <span class="digital">Digital</span>
+        </div>
+        <div class="mobile-toggle">☰</div>
+        <nav>
+            <ul>
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#about">Sobre Nós</a></li>
+                <li><a href="#cases">Cases</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+        <a href="#contact" class="cta-button">Fale Conosco</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Trazendo Soluções Digitais para Impulsionar Seu Negócio</h1>
+            <p>Automação de processos, performance digital e otimização para economizar tempo, aumentar eficiência e escalar resultados.</p>
+            <a href="#services" class="cta-button">Conheça Nossos Serviços</a>
+        </div>
+        <div class="hero-graphic">
+            <div class="circle circle-outer"></div>
+            <div class="circle circle-inner"></div>
+            <div class="connection-line line1"></div>
+            <div class="connection-line line2"></div>
+            <div class="connection-line line3"></div>
+            <div class="connection-line line4"></div>
+            <div class="connection-line line5"></div>
+            <div class="connection-line line6"></div>
+            <div class="connection-line line7"></div>
+            <div class="connection-line line8"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header">
+            <h2>Nossos Serviços</h2>
+            <p>Soluções personalizadas para transformar seu negócio através da automação e performance digital.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🔄</div>
+                <div class="service-content">
+                    <h3>Automação de Processos</h3>
+                    <p>Criamos fluxos automatizados no n8n e BotConversa, conectando plataformas e otimizando operações para aumentar a produtividade.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💬</div>
+                <div class="service-content">
+                    <h3>Chatbots Inteligentes</h3>
+                    <p>Desenvolvemos chatbots para WhatsApp, Instagram e Messenger, melhorando a experiência do cliente e otimizando o suporte.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <div class="service-content">
+                    <h3>Gestão de Tráfego Pago</h3>
+                    <p>Impulsionamos negócios através de campanhas estratégicas no Meta Ads, garantindo maior alcance e conversões.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎬</div>
+                <div class="service-content">
+                    <h3>Criação de Criativos</h3>
+                    <p>Produzimos criativos visuais impactantes e edição de vídeos profissionais, otimizados para anúncios e redes sociais.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔗</div>
+                <div class="service-content">
+                    <h3>Integrações Inteligentes</h3>
+                    <p>Implementamos integrações entre plataformas, automação de marketing e análise de dados para melhorar performance.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <div class="service-content">
+                    <h3>Soluções Personalizadas</h3>
+                    <p>Estratégias sob medida que combinam automação, marketing e tecnologia para impulsionar seu negócio digital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Sobre a MetaSync Digital</h2>
+                <h3>Transformando empresas através da automação e performance digital</h3>
+                <p>A MetaSync Digital é especializada em automação, performance digital e otimização de processos, ajudando empresas a economizar tempo, aumentar eficiência e escalar resultados através de tecnologia inteligente.</p>
+                <p>Nosso objetivo é transformar empresas através da automação e performance digital, otimizando processos, escalando resultados e impulsionando negócios com tecnologia inteligente.</p>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <div class="icon">💡</div>
+                        <div>
+                            <h4>Inovação</h4>
+                            <p>Criamos soluções modernas e eficientes para otimizar o digital.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="icon">⚙️</div>
+                        <div>
+                            <h4>Automação Inteligente</h4>
+                            <p>Fluxos e processos que trabalham para você.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="icon">📈</div>
+                        <div>
+                            <h4>Resultados Reais</h4>
+                            <p>Performance digital baseada em dados e estratégia.</p>
+                        </div>
+                    </div>
+                    <div class="value-item">
+                        <div class="icon">🎯</div>
+                        <div>
+                            <h4>Personalização</h4>
+                            <p>Cada negócio é único, e nossas soluções são feitas sob medida.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <img src="/api/placeholder/600/400" alt="MetaSync Digital Team">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-header">
+            <h2>O Que Dizem Nossos Clientes</h2>
+            <p>Empresas que transformaram seus negócios com nossas soluções.</p>
+        </div>
+        <div class="testimonials-slider">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"A implementação do chatbot e a automação de processos pela MetaSync Digital transformou completamente nosso atendimento ao cliente. Reduzimos o tempo de resposta em 70% e aumentamos as conversões em 35%."</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/60/60" alt="João Silva">
+                    <div class="author-info">
+                        <h4>João Silva</h4>
+                        <p>CEO, Empresa de E-commerce</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Vamos transformar seu negócio com tecnologia e automação?</h2>
+            <p>Entre em contato conosco hoje mesmo para uma consultoria gratuita e descubra como podemos impulsionar seus resultados digitais.</p>
+            <a href="#contact" class="cta-button">Entre em Contato</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <span class="meta">Meta</span><span class="sync">Sync</span>
+                </div>
+                <p>Automação, performance digital e otimização de processos para impulsionar seu negócio.</p>
+                <div class="social-links">
+                    <a href="#"><span>fb</span></a>
+                    <a href="#"><span>ig</span></a>
+                    <a href="#"><span>in</span></a>
+                    <a href="#"><span>yt</span></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#about">Sobre Nós</a></li>
+                    <li><a href="#cases">Cases</a></li>
+                    <li><a href
